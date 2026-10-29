@@ -1,0 +1,39 @@
+
+name: CI - Pruebas JUnit
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'feature/**'
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  pruebas-unitarias:
+    name: Ejecutar pruebas JUnit
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Descargar codigo del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Dar permisos a Maven Wrapper
+        run: chmod +x mvnw
+
+      - name: Ejecutar pruebas unitarias
+        run: ./mvnw clean test

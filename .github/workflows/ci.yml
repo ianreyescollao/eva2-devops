@@ -54,4 +54,4 @@ jobs:
       - name: Analizar calidad con SonarCloud
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:5.2.0.4988:sonar

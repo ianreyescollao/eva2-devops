@@ -1,5 +1,5 @@
 
-name: CI - Pruebas JUnit
+name: CI - Calidad de Codigo
 
 on:
   push:
@@ -14,15 +14,15 @@ on:
       - develop
 
 jobs:
-  pruebas-unitarias:
-    name: Ejecutar pruebas JUnit
+  pruebas:
+    name: JUnit y JaCoCo
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
 
     steps:
-      - name: Descargar codigo del repositorio
+      - name: Descargar repositorio
         uses: actions/checkout@v4
 
       - name: Configurar Java 21
@@ -32,8 +32,17 @@ jobs:
           java-version: '21'
           cache: maven
 
-      - name: Dar permisos a Maven Wrapper
+      - name: Permisos a Maven Wrapper
         run: chmod +x mvnw
 
-      - name: Ejecutar pruebas unitarias
-        run: ./mvnw clean test
+
+      - name: Ejecutar JUnit y generar cobertura JaCoCo
+        run: ./mvnw clean verify
+
+      - name: Publicar reporte JaCoCo
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reporte-jacoco
+          path: target/site/jacoco/
+          if-no-files-found: warn

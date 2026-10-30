@@ -15,15 +15,18 @@ on:
 
 jobs:
   pruebas:
-    name: JUnit y JaCoCo
+    name: JUnit, JaCoCo y SonarCloud
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
 
     steps:
+      # 1. PREPARAR ENTORNO
       - name: Descargar repositorio
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Configurar Java 21
         uses: actions/setup-java@v4
@@ -35,7 +38,7 @@ jobs:
       - name: Permisos a Maven Wrapper
         run: chmod +x mvnw
 
-
+      # 2. PRUEBAS Y COBERTURA
       - name: Ejecutar JUnit y generar cobertura JaCoCo
         run: ./mvnw clean verify
 
@@ -46,3 +49,9 @@ jobs:
           name: reporte-jacoco
           path: target/site/jacoco/
           if-no-files-found: warn
+
+      # 3. ANALISIS SONARCLOUD
+      - name: Analizar calidad con SonarCloud
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:5.2.0.4988:sonar

@@ -71,7 +71,7 @@
 		<dependency>
 			<groupId>com.oracle.database.security</groupId>
 			<artifactId>osdt_core</artifactId>
-			<version>21.18.0.0</version>
+			<version>21.24.0.0</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>

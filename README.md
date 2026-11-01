@@ -333,8 +333,3 @@ Al principio el proyecto tenía pruebas y análisis de calidad, pero nada imped�
 
 Lo mejor fue ver que los controles funcionan de verdad: la prueba de bloqueo detuvo la integración y, en el PR #9, SonarCloud frenó un cambio nuestro por un problema de seguridad que no habíamos notado. Trabajar con ramas y Pull Requests también nos ayudó a ordenarnos. Quedó pendiente separar la base de datos en su propio contenedor y optimizar la imagen Docker.
 
-### Reflexión individual — Ian Reyes Collao
-Me encargué de la base de calidad: JUnit, JaCoCo, SonarCloud, Dependabot y el Dockerfile. Al principio lo veía como herramientas sueltas, pero al juntarlas en el pipeline entendí que cada una revisa algo distinto: si el código funciona, cuánto está probado y si es seguro. Lo que más me costó fue dejar SonarCloud funcionando bien con el reporte de cobertura. Ver el pipeline en rojo con la prueba de bloqueo me dejó claro para qué sirve todo esto.
-
-### Reflexión individual — Joaquín Ferrada Castillo
-Mi parte fue armar el flujo completo: Docker Compose, el build de la imagen, el bloqueo por calidad y el despliegue automático, además de la documentación. Lo más difícil fue que los errores no venían del código, sino de la configuración: el límite del plan gratuito de SonarCloud, las acciones de Docker que había que fijar por hash y hasta un error de indentación en el YAML. Aprendí que el despliegue es el resultado de una cadena de controles y que, gracias a la trazabilidad, siempre se puede saber qué versión del código está corriendo.
